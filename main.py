@@ -100,8 +100,12 @@ def show_by_waktu():
 
     return jsonify(json_data)
 
-@app.route('/search/<query>', methods=['POST', 'GET'])
-def search(query):
+@app.route('/search', methods=['POST', 'GET'])
+def search():
+
+    query = request.query_string.decode()
+    query = query.partition("=")[2]
+
     API = SearchVideo(query)
     API.buildConnection()
     datas = API.getData()
